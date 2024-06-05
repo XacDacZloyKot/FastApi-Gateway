@@ -1,0 +1,40 @@
+# Исключить виртуальное окружение venv
+venv/
+VENV/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Исключить файлы состояния Celery Beat
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+
+# Исключить файлы временного состояния Celery
+*.pid
+*.log
+
+# Исключить файлы и папки настроек IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Исключить файлы, создаваемые операционными системами
+.DS_Store
+Thumbs.db
+
+# Исключить кэшируемые файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Исключить файлы настройки контейнеров
+*.env
+docker-compose.override.yml
+
+# Исключить другие файлы, которые могут генерироваться
+*.bak
+*.swp
+*.tmp
