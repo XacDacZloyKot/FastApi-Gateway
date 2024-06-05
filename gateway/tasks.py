@@ -3,7 +3,7 @@ from kombu import Queue
 from queue import Empty
 from functools import wraps
 
-app = Celery('hello', broker='amqp://guest@localhost//')
+app = Celery('tasks', broker='amqp://guest@localhost//')
 app.conf.broker_connection_retry_on_startup = True
 
 task_queues = [
