@@ -12,8 +12,8 @@ def generate_unique_requests(n):
 
 def send_requests():
     url = 'http://localhost:8000/gateway'
-    unique_requests = generate_unique_requests(10)
-    repeat_requests = [random.choice(unique_requests) for _ in range(random.randint(10, 20))]
+    unique_requests = generate_unique_requests(400)
+    repeat_requests = [random.choice(unique_requests) for _ in range(random.randint(400, 500))]
     all_requests = unique_requests + repeat_requests
 
     for request_data in all_requests:

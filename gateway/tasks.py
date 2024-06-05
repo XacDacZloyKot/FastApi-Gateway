@@ -14,7 +14,7 @@ task_queues = [
 ]
 
 rate_limits = {
-    'message': 60,
+    'message': 10,
 }
 
 task_queues += [Queue(name+'_tokens', max_length=2) for name, limit in rate_limits.items()]
@@ -31,7 +31,7 @@ def token():
 def setup_periodic_tasks(sender, **kwargs):
     for name, limit in rate_limits.items():
         sender.add_periodic_task(
-            60 / limit,
+            1 / limit,
             token.signature(queue=name + '_tokens'),
             name=name + '_tokens')
 
