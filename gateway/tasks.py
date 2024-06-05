@@ -53,7 +53,7 @@ def rate_limit(task_group):
 
 async def send_async_request(data):
     async with aiohttp.ClientSession() as session:
-        async with session.post("http://localhost:8002", json=data) as response:
+        async with session.post("http://localhost:8002/process", json=data) as response:
             pass
 
 
