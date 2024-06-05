@@ -3,6 +3,9 @@ from kombu import Queue
 from queue import Empty
 from functools import wraps
 
+import aiohttp
+import asyncio
+
 app = Celery('tasks', broker='amqp://guest@localhost//')
 app.conf.broker_connection_retry_on_startup = True
 
@@ -10,12 +13,10 @@ task_queues = [
     Queue('message'),
 ]
 
-# количество запусков в минуту
 rate_limits = {
     'message': 60,
 }
 
-# автоматически сгенерируем очереди с токенами под все группы, на которые нужен лимит
 task_queues += [Queue(name+'_tokens', max_length=2) for name, limit in rate_limits.items()]
 
 app.conf.task_queues = task_queues
@@ -50,9 +51,15 @@ def rate_limit(task_group):
     return decorator_func
 
 
+async def send_async_request(data):
+    async with aiohttp.ClientSession() as session:
+        async with session.post("http://localhost:8002", json=data) as response:
+            pass
+
+
 @app.task(bind=True, max_retries=None)
 @rate_limit('message')
 def send_request(self, data):
-    print('Called message Api 1')
+    print('Called request')
     return {'status': 200}
 
