@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Body
+from fastapi.middleware.cors import CORSMiddleware
 from redis import Redis
 
 from hashlib import sha256
@@ -6,8 +7,18 @@ import json
 
 from tasks import send_request
 
+
 app = FastAPI()
 redis = Redis(host="localhost", port=6379, db=0)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def hash_request(data):
@@ -15,15 +26,14 @@ def hash_request(data):
 
 
 @app.post("/gateway")
-async def gateway(request: Request):
-    data = await request.json()
+async def gateway(data=Body(embed=True)):
     request_hash = hash_request(data)
 
     if redis.get(request_hash):
         return {"status": "duplicate request"}
 
     # Кеш ???
-    await redis.set(name=request_hash, value=1, ex=300)
+    redis.set(name=request_hash, value=1, ex=300)
 
     # Отправка запроса в очередь
     send_request.apply_async(queue='message', kwargs={'data': data})

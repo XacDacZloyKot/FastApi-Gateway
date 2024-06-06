@@ -1,14 +1,22 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Body
+from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/process")
-async def process_endpoint(request: Request):
-    data = await request.json()
-    print(f"Processing data: {data}")
-    return {"message": "Data processed", "data": data}
+def process_endpoint(data=Body()):
+    print(f"Processing data: {data} | Время {datetime.now()}")
+    # return {"message": "Data processed", "data": data}
 
 
 if __name__ == "__main__":
