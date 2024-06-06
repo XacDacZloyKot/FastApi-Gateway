@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import requests
 import random
+from datetime import datetime
 
 app = FastAPI()
 
@@ -12,8 +13,8 @@ def generate_unique_requests(n):
 
 def send_requests():
     url = 'http://127.0.0.1:8000/gateway/'
-    unique_requests = generate_unique_requests(20)
-    repeat_requests = [random.choice(unique_requests) for _ in range(random.randint(10, 20))]
+    unique_requests = generate_unique_requests(400)
+    repeat_requests = [random.choice(unique_requests) for _ in range(random.randint(300, 400))]
     all_requests = unique_requests + repeat_requests
 
     for request_data in all_requests:
@@ -21,7 +22,7 @@ def send_requests():
             request_dict = {'data': request_data}
             print(request_dict)
             response = requests.post(url, json=request_dict)
-            print(response.text)
+            print(response.text, "I", datetime.now())
         except Exception as e:
             print(f"Error: {e}")
 

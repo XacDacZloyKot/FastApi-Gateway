@@ -43,7 +43,7 @@ def rate_limit(task_group):
             with self.app.connection_for_read() as conn:
                 with conn.SimpleQueue(task_group+'_tokens', no_ack=True, queue_opts={'max_length': 2}) as queue:
                     try:
-                        queue.get(block=True, timeout=5)
+                        queue.get(block=True, timeout=1)
                         return func(self, *args, **kwargs)
                     except Empty:
                         self.retry(countdown=1)
