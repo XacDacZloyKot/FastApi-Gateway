@@ -16,7 +16,7 @@ app.add_middleware(
 @app.post("/process")
 def process_endpoint(data=Body()):
     print(f"Processing data: {data} | Время {datetime.now()}")
-    # return {"message": "Data processed", "data": data}
+    return {"message": "Data processed", "data": data}
 
 
 if __name__ == "__main__":

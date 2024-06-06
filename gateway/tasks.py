@@ -52,10 +52,10 @@ def rate_limit(task_group):
 
 
 async def send_async_request(data):
+    url = "http://127.0.0.1:8002/process/"
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.post("http://0.0.0.0:8002/process/", json=data) as response:
-                # pass
+            async with session.post(url, json=data) as response:
                 response_data = await response.json()
                 print(response_data)
     except Exception as e:
@@ -65,7 +65,9 @@ async def send_async_request(data):
 @app.task(bind=True, max_retries=None)
 @rate_limit('message')
 def send_request(self, data):
-    # print('Called request')
-    send_async_request(data)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(send_async_request(data))
+    loop.close()
     return {'status': 200}
 

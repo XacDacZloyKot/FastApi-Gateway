@@ -8,6 +8,7 @@ import json
 from tasks import send_request
 
 
+
 app = FastAPI()
 redis = Redis(host="localhost", port=6379, db=0)
 
