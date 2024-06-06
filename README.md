@@ -58,7 +58,7 @@ py ./pong/main.py
 ## Тесты
 
 ### Сервис pong
-![Screen test](https://github.com/XacDacZloyKot/FastApi-Gateway/blob/main/assets/images/flower.png?raw=true)
+![Screen test](https://github.com/XacDacZloyKot/FastApi-Gateway/blob/main/assets/images/pong.png?raw=true)
 
 ### Мониторинг во Flower
 ![Screen test](https://github.com/XacDacZloyKot/FastApi-Gateway/blob/main/assets/images/flower.png?raw=true)
