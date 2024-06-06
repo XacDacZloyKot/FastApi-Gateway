@@ -20,19 +20,21 @@ docker run -d --rm --name redis -p 6379:6379 redis:latest
 ### Запуск Worker
 
 ```powershell
-celery -A gateway.tasks worker -Q github -c 8 -l info -P eventlet -n worker1@%h
+cd .\gateway\
+celery -A tasks:app worker -Q message -c 8 -l info -P eventlet -n worker1@%h
 ```
 
 ### Запуск Flower
 
 ```powershell
-celery -A gateway.tasks flower
+cd .\gateway\
+celery -A tasks flower
 ```
 
 ### Запуск beat
 
 ```powershell
-celery -A gateway.tasks beat —loglevel=info
+celery -A gateway.tasks beat --loglevel=info
 ```
 
 ### Запуск gateway
@@ -52,3 +54,13 @@ py ./ping/main.py
 ```powershell
 py ./pong/main.py
 ```
+
+## Тесты
+
+### Сервис pong
+![Screen test](https://github.com/XacDacZloyKot/FastApi-Gateway/blob/main/assets/images/flower.png?raw=true)
+
+### Мониторинг во Flower
+![Screen test](https://github.com/XacDacZloyKot/FastApi-Gateway/blob/main/assets/images/flower.png?raw=true)
+
+
