@@ -17,7 +17,7 @@ rate_limits = {
     'message': 10,
 }
 
-task_queues += [Queue(name+'_tokens', max_length=2) for name, limit in rate_limits.items()]
+task_queues += [Queue(name+'_tokens', max_length=10) for name, limit in rate_limits.items()]
 
 app.conf.task_queues = task_queues
 
@@ -70,4 +70,3 @@ def send_request(self, data):
     loop.run_until_complete(send_async_request(data))
     loop.close()
     return {'status': 200}
-
